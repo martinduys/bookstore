@@ -104,3 +104,4 @@ target/
 
 #SQLlite databases
 *.sqlite3
+*.sqlite3
