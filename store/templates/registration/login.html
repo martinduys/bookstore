@@ -10,7 +10,7 @@
     {{ form.as_p }}
     <input type="submit" value="Log In"/>
     <input type="hidden" name="next" value="{{ next }}"/>
-
 </form>
+<a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
 </body>
 </html>

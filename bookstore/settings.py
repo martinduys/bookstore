@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     'store',
     'registration',
 )
@@ -65,6 +66,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
+
             ],
         },
     },
@@ -116,4 +120,14 @@ EMAIL_HOST_PASSWORD = "S4nsh1n3"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "martinduys@gmail.com"
+
+# Social Authentication
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Social Auth Facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1715997771944918'
+SOCIAL_AUTH_FACEBOOK_SECRET = '706e3c3ac3d698caa38eac1e67510d41'
 
