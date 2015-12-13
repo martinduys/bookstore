@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 <form method="post" action=".">
     {% csrf_token %}
     {{ form.as_p }}
@@ -12,5 +8,4 @@
     <input type="hidden" name="next" value="{{ next }}"/>
 </form>
 <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-</body>
-</html>
+{% endblock %}
