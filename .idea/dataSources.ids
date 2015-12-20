@@ -50,6 +50,8 @@
       <exported-key name="#FAKE_django_admin_log_1" table="django_admin_log" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_registration_registrationprofile_1" table="registration_registrationprofile" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_social_auth_usersocialauth_1" table="social_auth_usersocialauth" schema="" catalog="" columns="user_id"/>
+      <exported-key name="#FAKE_store_cart_1" table="store_cart" schema="" catalog="" columns="user_id"/>
+      <exported-key name="#FAKE_store_review_1" table="store_review" schema="" catalog="" columns="user_id"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
@@ -154,15 +156,61 @@
       <column name="name" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="seq" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
     </table>
+    <table name="store_author" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="first_name" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <exported-key name="#FAKE_store_book_1" table="store_book" schema="" catalog="" columns="author_id"/>
+    </table>
     <table name="store_book" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <column name="title" sqlType="VARCHAR(200)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
-      <column name="author" sqlType="VARCHAR(200)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="publish_date" sqlType="DATE" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="price" sqlType="DECIMAL" precision="2000000000" scale="10" nullable="false" jdbcType="6"/>
       <column name="stock" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="author_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
+      <foreign-key name="#FAKE_store_book_1" columns="author_id" ref-table="store_author" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_store_bookorder_2" table="store_bookorder" schema="" catalog="" columns="book_id"/>
+      <exported-key name="#FAKE_store_review_2" table="store_review" schema="" catalog="" columns="book_id"/>
+      <index name="store_book_4f331e2f" unique="true" columns="author_id"/>
+    </table>
+    <table name="store_bookorder" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="quantity" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="book_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="cart_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_store_bookorder_1" columns="cart_id" ref-table="store_cart" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_store_bookorder_2" columns="book_id" ref-table="store_book" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="store_bookorder_c44d83f7" unique="true" columns="cart_id"/>
+      <index name="store_bookorder_0a4572cc" unique="true" columns="book_id"/>
+    </table>
+    <table name="store_cart" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="active" sqlType="BOOL" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="order_date" sqlType="DATE" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="payment_type" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="payment_id" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_store_cart_1" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_store_bookorder_1" table="store_bookorder" schema="" catalog="" columns="cart_id"/>
+      <index name="store_cart_e8701ad4" unique="true" columns="user_id"/>
+    </table>
+    <table name="store_review" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="book_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="publish_date" sqlType="DATE" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_store_review_1" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_store_review_2" columns="book_id" ref-table="store_book" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="store_review_e8701ad4" unique="true" columns="user_id"/>
+      <index name="store_review_0a4572cc" unique="true" columns="book_id"/>
     </table>
   </data-source>
   <data-source name="Django default2" uuid="32f1b9bb-2506-4b17-ba4c-25605898b00d">
