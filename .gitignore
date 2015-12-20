@@ -104,4 +104,6 @@ target/
 
 #SQLlite databases
 *.sqlite3
-*.sqlite3
+
+# Static compiled Files
+static/
